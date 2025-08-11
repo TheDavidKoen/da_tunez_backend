@@ -10,7 +10,11 @@ const createToken = (id) =>
 const sendTokenResponse = (res, user, message) => {
   const token = createToken(user._id);
   res
-    .cookie("token", token, { httpOnly: true })
+    .cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // must be true on HTTPS
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    })
     .json({ message, user });
 };
 
