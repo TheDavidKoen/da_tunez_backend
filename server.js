@@ -10,13 +10,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || origin === process.env.CLIENT_ORIGIN) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: [
+    "http://localhost:3000",
+    "https://da-tunez.davidkoen.tech" // your deployed frontend
+  ],
   credentials: true
 }));
 app.use(express.json());
